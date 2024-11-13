@@ -1,6 +1,7 @@
 import React from 'react';
 import useLottery from '../hooks/useLottery';
 import LotteryResult from '../components/LotteryResultProps';
+import { styled } from 'styled-components';
 
 
 const Home: React.FC = () => {
@@ -8,7 +9,9 @@ const Home: React.FC = () => {
 
   // Exibe mensagem de carregamento enquanto os dados estão sendo carregados
   if (loading) {
-    return <div>Carregando...</div>;
+    return <Loading>
+      <Text>Carregando...</Text>
+      </Loading>;
   }
 
   // Exibe mensagem de erro caso a requisição falhe
@@ -25,3 +28,23 @@ const Home: React.FC = () => {
 };
 
 export default Home;
+const Loading = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f5f5f5;
+  text-align: center;
+  padding: 20px;
+`
+const Text = styled.div`
+  border: 2px, solid;
+  padding: 20px;
+  height: 230px;
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`

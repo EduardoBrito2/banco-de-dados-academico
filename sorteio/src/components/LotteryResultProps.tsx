@@ -7,11 +7,11 @@ import { LotteryResultProps } from '../types';
 const LotteryResult: React.FC<LotteryResultProps> = ({ megasena }) => {
   return (
     <Panel>
-      <h1>Último Sorteio da Mega-Sena</h1>
-      {/* <p><strong>Concurso:</strong> {megasena.numeroDoConcurso}</p>
-      <p><strong>Data de Apuração:</strong> {megasena.dataApuracao}</p>
-      <p><strong>Data do Próximo Concurso:</strong> {megasena.dataProximoConcurso}</p>
-      <p><strong>Valor do Prêmio:</strong> R$ {megasena.valorPremio.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p> */}
+      <Result>
+      <h1>Mega-Sena</h1>
+      {/* <p><strong>Concurso:</strong> {megasena.numeroDoConcurso}</p> */}
+      {/* <p><strong>Data do Próximo Concurso:</strong> {megasena.dataProximoConcurso}</p> */}
+      {/* <p><strong>Valor do Prêmio:</strong> R$ {megasena.valorPremio.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>  */}
       <DezenasContainer>
         {megasena.dezenas.map((dezena, index) => (
           <Dezena key={index}>
@@ -19,11 +19,20 @@ const LotteryResult: React.FC<LotteryResultProps> = ({ megasena }) => {
           </Dezena>
         ))}
       </DezenasContainer>
+      <p><strong>Data de Apuração:</strong> {megasena.dataApuracao}</p>
+      </Result>
     </Panel>
   );
 };
 
 // Styled-components
+const Result = styled.div`
+border: 2px, solid;
+padding: 20px;
+height: 230px;
+width: 500px;
+`
+
 const Panel = styled.div`
   display: flex;
   flex-direction: column;
@@ -41,13 +50,14 @@ const DezenasContainer = styled.div`
   justify-content: center;
   gap: 10px;
   flex-wrap: wrap;
+  padding: 40px;
 `;
 
 const Dezena = styled.span`
   background-color: #209869;
   color: #fff;
-  padding: 10px 20px;
-  border-radius: 5px;
+  padding: 10px 10px;
+  border-radius: 25px;
   font-size: 20px;
   font-weight: bold;
 `;
