@@ -233,42 +233,50 @@ select fc_media_salario()
 drop function fc_media_salario()
 
 --4 Crie a funcao fc_salarios que recebe o código do empregado como parâmetro e retorne o salário, o salário acrescido de 10% e o salário reduzido em 15%.
+-- Criando a função
 create function fc_salarios(c_empregado int)
 returns table(salario real, salario_acrescimo real, salario_reducao real)
 language plpgsql as
 $$
-declare 
-	resultado real;
 begin
-	resultado = (
-		select salario, salario*1.10, salario*0.85 from tbl_empregados
-		where cod_empregado = c_empregado
-				);
-	return resultado;
+    return query
+    select empregados.salario::real,(empregados.salario*1.10)::real,(empregados.salario*0.85)::real
+    from tbl_empregados as empregados
+    where cod_empregado = c_empregado;
 end
 $$;
-select fc_salarios()
-drop function fc_salarios()
+
+select fc_salarios(1)
+drop function fc_salarios(int)
 
 
 --5 Crie uma funcao denominada fc_projetos que liste o código e o nome de todos os projetos cadastrados.
-CREATE OR REPLACE FUNCTION fc_projetos()
-RETURNS TABLE(codigo INT, nomep TEXT)  -- Alterado para TEXT
+CREATE FUNCTION fc_projetos()
+returns table(codigo INT,nomep TEXT)
 LANGUAGE plpgsql
 AS
 $$
 BEGIN
-    -- Retorna todos os projetos com o código e nome
-    RETURN QUERY
-    SELECT cod_projeto, nome
-    FROM tbl_projetos;
+    return query
+    SELECT cod_projeto,tbl_projetos.nome FROM tbl_projetos;
 END;
 $$;
 
 select fc_projetos()
 drop function fc_projetos()
 
-
 --6 Crie a funcao fc_proj_departmento que recebe o codigo do departamento e mostra quantos projetos o departamento possui
-
-
+create function fc_proj_departmento(codigo_d int)
+returns int
+language plpgsql as
+$$
+declare
+	num_projetos int;
+begin
+	select count(cod_projeto) into num_projetos from tbl_projetos
+	where cod_departamento = codigo_d;
+	return num_projetos;
+end
+$$
+select fc_proj_departmento(1)
+drop function fc_proj_departmento(int)
