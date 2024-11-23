@@ -6,6 +6,7 @@ create table tbl_departamentos(
 cod_departamento serial primary key,
 nome text not null,
 data_inicio date,
+qtde_projetos int DEFAULT 0,
 cod_cidade int references tbl_cidades(cod_cidade));
 
 create table tbl_projetos(
@@ -21,6 +22,12 @@ create table tbl_empregados
  sexo char,
  salario real,
  cod_departamento int references tbl_departamentos(cod_departamento)
+ );
+
+ create table tbl_dependentes
+(cod_dependente serial primary key,
+ nome text,
+ cod_empregado int references tbl_empregados(cod_empregado)
  );
 
 
@@ -74,43 +81,43 @@ create table tbl_empregados
 ('Cleveland'),
 ('Honolulu');
 
-INSERT INTO tbl_departamentos (nome, data_inicio, cod_cidade) VALUES
-('Departamento 1', '2023-01-01', 1),
-('Departamento 2', '2023-02-15', 2),
-('Departamento 3', '2023-03-10', 3),
-('Departamento 4', '2023-04-20', 4),
-('Departamento 5', '2023-05-05', 4),
-('Departamento 6', '2023-06-30', 4),
-('Departamento 7', '2023-07-12', 4),
-('Departamento 8', '2023-08-22', 5),
-('Departamento 9', '2023-09-18', 5),
-('Departamento 10', '2023-10-05', 10),
-('Departamento 11', '2023-11-11', 10),
-('Departamento 12', '2023-12-25', 10),
-('Departamento 13', '2024-01-03', 10),
-('Departamento 14', '2024-02-14', 10),
-('Departamento 15', '2024-03-21', 10),
-('Departamento 16', '2024-04-02', 10),
-('Departamento 17', '2024-05-17', 10),
-('Departamento 18', '2024-06-28', 18),
-('Departamento 19', '2024-07-30', 18),
-('Departamento 20', '2024-08-08', 28),
-('Departamento 21', '2024-09-10', 21),
-('Departamento 22', '2024-10-12', 21),
-('Departamento 23', '2024-11-20', 21),
-('Departamento 24', '2024-12-24', 21),
-('Departamento 25', '2025-01-07', 21),
-('Departamento 26', '2025-02-19', 21),
-('Departamento 27', '2025-03-25', 24),
-('Departamento 28', '2025-04-30', 24),
-('Departamento 29', '2025-05-02', 24),
-('Departamento 30', '2025-06-15', 30),
-('Departamento 31', '2025-07-22', 31),
-('Departamento 32', '2025-08-11', 32),
-('Departamento 33', '2025-09-09', 30),
-('Departamento 34', '2025-10-28', 30),
-('Departamento 35', '2025-11-15', 30),
-('Departamento 36', '2025-12-10', 30);
+INSERT INTO tbl_departamentos (nome, data_inicio, cod_cidade, qtde_projetos) VALUES
+('Departamento 1', '2023-01-01', 1,2),
+('Departamento 2', '2023-02-15', 2,2),
+('Departamento 3', '2023-03-10', 3,0),
+('Departamento 4', '2023-04-20', 4, 3),
+('Departamento 5', '2023-05-05', 4,0),
+('Departamento 6', '2023-06-30', 4,2),
+('Departamento 7', '2023-07-12', 4,0),
+('Departamento 8', '2023-08-22', 5,0),
+('Departamento 9', '2023-09-18', 5,0),
+('Departamento 10', '2023-10-05', 10,1),
+('Departamento 11', '2023-11-11', 10,0),
+('Departamento 12', '2023-12-25', 10,0),
+('Departamento 13', '2024-01-03', 10,0),
+('Departamento 14', '2024-02-14', 10,0),
+('Departamento 15', '2024-03-21', 10,0),
+('Departamento 16', '2024-04-02', 10,0),
+('Departamento 17', '2024-05-17', 10,0),
+('Departamento 18', '2024-06-28', 18,0),
+('Departamento 19', '2024-07-30', 18,0),
+('Departamento 20', '2024-08-08', 28,0),
+('Departamento 21', '2024-09-10', 21,0),
+('Departamento 22', '2024-10-12', 21,0),
+('Departamento 23', '2024-11-20', 21,0),
+('Departamento 24', '2024-12-24', 21,0),
+('Departamento 25', '2025-01-07', 21,0),
+('Departamento 26', '2025-02-19', 21,0),
+('Departamento 27', '2025-03-25', 24,0),
+('Departamento 28', '2025-04-30', 24,0),
+('Departamento 29', '2025-05-02', 24,0),
+('Departamento 30', '2025-06-15', 30,0),
+('Departamento 31', '2025-07-22', 31,0),
+('Departamento 32', '2025-08-11', 32,0),
+('Departamento 33', '2025-09-09', 30,0),
+('Departamento 34', '2025-10-28', 30,0),
+('Departamento 35', '2025-11-15', 30,0),
+('Departamento 36', '2025-12-10', 30,0);
 
 INSERT INTO tbl_projetos (nome, cod_departamento) VALUES
 ('Projeto A', 1),
@@ -154,7 +161,7 @@ INSERT INTO tbl_empregados (nome, data_nascimento, endereco, sexo, salario, cod_
 ('Luciana Ferreira', '1991-05-11', 'Avenida da Cachoeira, 9876, Curitiba, PR', 'F', 5400.00, 15),
 ('André Oliveira', '1986-02-14', 'Rua das Cascatas, 5432, Maceió, AL', 'M', 5300.00, 17),
 ('Patrícia Gomes', '1990-11-29', 'Avenida das Dunas, 8765, Vitória, ES', 'F', 5100.00, 18),
-('Felipe Pereira', '1987-03-06', 'Rua da Serra, 1357, Palmas, TO', 'M', 5700.00, 19),
+('Felipe Pereira', '1987-03-06', 'Rua da Serra, 1357, Palmas, TO', 'M', 5710.00, 19),
 ('Laura Ribeiro', '1992-06-08', 'Avenida das Ondas, 8642, João Pessoa, PB', 'F', 5200.00, 20),
 ('Roberto Alves', '1988-12-01', 'Rua dos Lagos, 2468, Teresina, PI', 'M', 5400.00, 20),
 ('Aline Barbosa', '1993-04-17', 'Avenida dos Rios, 9753, Boa Vista, RR', 'F', 5100.00, 20),
@@ -177,81 +184,22 @@ INSERT INTO tbl_empregados (nome, data_nascimento, endereco, sexo, salario, cod_
 ('Gustavo Gomes', '1986-09-25', 'Rua das Montanhas, 5432, Belo Horizonte, MG', 'M', 5700.00, 36),
 ('Lúcia Castro', '1990-05-19', 'Avenida das Árvores, 7890, Curitiba, PR', 'F', 5600.00, 36);
 
+INSERT INTO tbl_dependentes (nome,cod_empregado) VALUES('Joao',1),('Pedro',1),('Maria',2),('Paulo',7);
 
 -- exercicios
 
 
---1 crie uma store procedure chamada proc_upd_nome_depart para atualizar o nome de um departamento. 
---recebe como parametro um codigo inteiro e um novonome em texto atualizando o nome do departamento com esse respectivo codigo
-create procedure proc_upd_nome_departe(codigo int,novo_nome_departamento text)
-language plpgsql
-as $$
-begin 
-	update tbl_departamentos set nome=novo_nome_departamento
-	where cod_departamento = codigo;
-	commit;
-end $$
 
--- call proc_upd_nome_departe(5,'departamento x')
+--1 crie uma trigger que atualiza a quantidade de projetos da tbl_departamentos caso um projeto for deletado
 
---2 crie uma store procedure chamada proc_copiatbl que cria uma copia da tabela tbl_cidades toda vez que for executada;
-create procedure proc_copiatbl()
-language plpgsql
-as $$
-begin
-	drop table if exists tbl_cidade_copia;
-	create table tbl_cidade_copia as
-	select * from tbl_cidades;
-	commit;
-end $$
 
--- call proc_copiatbl()
--- select * from tbl_cidade_copia
+--2 crie uma trigger que atualiza a quantidade de projetos da tbl_departamentos caso um novo projeto for adicionado
 
---3 crie uma store procedure chamada proc_novoprojeto que adiciona um novo projeto na tabela tbl_projetos
---recebe como parametros o nome do projeto e o codigo do departamento
-create procedure proc_novoprojeto(nome_projeto text,codigo_departamento int)
-language plpgsql
-as $$
-begin
-	insert into tbl_projetos(nome, cod_departamento) values
-	(nome_projeto, codigo_departamento);
-	commit;
-end $$
--- call proc_novoprojeto('projeto x', 30)
--- select * from tbl_projetos
 
---4 crie uma store procedure chamada proc_delprojeto que deleta um projeto da tbl_projetos
--- recebe como parametro o codigo do projeto
-create procedure proc_delprojeto(codigo_do_projeto int)
-language plpgsql
-as $$
-begin
-	delete from tbl_projetos
-	where cod_projeto = codigo_do_projeto;
-	commit;
-end $$
--- call proc_delprojeto(3)
--- select * from tbl_projetos
+--3 a) Crie uma tabela chamada tbl_empregado_historico_salario com as colunas cod_empregado e salario e data
+--  b) crie uma trigger que salva o salario atual de um empregado toda vez que seu salario for atualizado
+-- dica: use a funcao now() para salvar a data
 
---5 crie uma store procedure chamada proc_projeto_arquivado que recebe o codigo de um projeto.
---a procedure devera criar uma tabela chamada tbl_projetos_arquivados, caso ela nao exista. tabela deve ter 2 colunas: codigo_projeto e nome.
---a procedure deve salvar o projeto do codigo recebido na tbl_projetos_arquivados e deleta-la da tabela tbl_projetos.
-create procedure proc_projeto_arquivado(codigo_do_projeto int)
-language plpgsql
-as $$
-begin
-	create table if not exists tbl_projetos_arquivados(
-		codigo_projeto int,
-		nome text
-		);
-		insert into tbl_projetos_arquivados(codigo_projeto,nome)
-		select cod_projeto, nome from tbl_projetos
-		where cod_projeto=codigo_do_projeto;
-		delete from tbl_projetos
-		where cod_projeto=codigo_do_projeto;
-		commit;
-end $$
-drop PROCEDURE proc_projeto_arquivado
--- call proc_projeto_arquivado(6)
--- select * from proc_projeto_arquivado
+
+--4 a) crie uma coluna chamada data_atualizacao na tbl_empregados do tipo TIMESTAMP
+-- b) crie uma trigger que toda vez que os dados do empregado forem atualizados, que essa data tambem seja atualizada. 

@@ -23,7 +23,6 @@ create table tbl_empregados
  cod_departamento int references tbl_departamentos(cod_departamento)
  );
 
-
  INSERT INTO tbl_cidades (nome) VALUES
 ('New York'),
 ('Los Angeles'),
@@ -154,7 +153,7 @@ INSERT INTO tbl_empregados (nome, data_nascimento, endereco, sexo, salario, cod_
 ('Luciana Ferreira', '1991-05-11', 'Avenida da Cachoeira, 9876, Curitiba, PR', 'F', 5400.00, 15),
 ('André Oliveira', '1986-02-14', 'Rua das Cascatas, 5432, Maceió, AL', 'M', 5300.00, 17),
 ('Patrícia Gomes', '1990-11-29', 'Avenida das Dunas, 8765, Vitória, ES', 'F', 5100.00, 18),
-('Felipe Pereira', '1987-03-06', 'Rua da Serra, 1357, Palmas, TO', 'M', 5700.00, 19),
+('Felipe Pereira', '1987-03-06', 'Rua da Serra, 1357, Palmas, TO', 'M', 5710.00, 19),
 ('Laura Ribeiro', '1992-06-08', 'Avenida das Ondas, 8642, João Pessoa, PB', 'F', 5200.00, 20),
 ('Roberto Alves', '1988-12-01', 'Rua dos Lagos, 2468, Teresina, PI', 'M', 5400.00, 20),
 ('Aline Barbosa', '1993-04-17', 'Avenida dos Rios, 9753, Boa Vista, RR', 'F', 5100.00, 20),
@@ -178,80 +177,98 @@ INSERT INTO tbl_empregados (nome, data_nascimento, endereco, sexo, salario, cod_
 ('Lúcia Castro', '1990-05-19', 'Avenida das Árvores, 7890, Curitiba, PR', 'F', 5600.00, 36);
 
 
+
 -- exercicios
 
 
---1 crie uma store procedure chamada proc_upd_nome_depart para atualizar o nome de um departamento. 
---recebe como parametro um codigo inteiro e um novonome em texto atualizando o nome do departamento com esse respectivo codigo
-create procedure proc_upd_nome_departe(codigo int,novo_nome_departamento text)
-language plpgsql
-as $$
-begin 
-	update tbl_departamentos set nome=novo_nome_departamento
-	where cod_departamento = codigo;
-	commit;
-end $$
-
--- call proc_upd_nome_departe(5,'departamento x')
-
---2 crie uma store procedure chamada proc_copiatbl que cria uma copia da tabela tbl_cidades toda vez que for executada;
-create procedure proc_copiatbl()
-language plpgsql
-as $$
+--1 Crie uma funcao denominada fc_soma que recebe dois valores inteiros e retorna o valor resultante da soma de ambos
+create function fc_soma(n1 int,n2 int)
+returns int
+language plpgsql as
+$$
+declare 
+	resultado integer;
 begin
-	drop table if exists tbl_cidade_copia;
-	create table tbl_cidade_copia as
-	select * from tbl_cidades;
-	commit;
-end $$
+	resultado = n1 + n2;
+	return resultado;
+end
+$$;
+select fc_soma(5,5)
 
--- call proc_copiatbl()
--- select * from tbl_cidade_copia
-
---3 crie uma store procedure chamada proc_novoprojeto que adiciona um novo projeto na tabela tbl_projetos
---recebe como parametros o nome do projeto e o codigo do departamento
-create procedure proc_novoprojeto(nome_projeto text,codigo_departamento int)
-language plpgsql
-as $$
+--2 Crie uma funcao denominada fc_maior_salario, que sem usar função agregada MAX, retorne o nome do empregado com o maior salario.
+create function  fc_maior_salario()
+returns varchar(50)
+language plpgsql as
+$$
+declare 
+	busca varchar(50);
 begin
-	insert into tbl_projetos(nome, cod_departamento) values
-	(nome_projeto, codigo_departamento);
-	commit;
-end $$
--- call proc_novoprojeto('projeto x', 30)
--- select * from tbl_projetos
+	busca = (select nome(e1) from tbl_empregados as e1
+	where salario = (
+	select salario from tbl_empregados as e2
+	where e1.salario <= e2.salario
+	order by salario desc
+	limit 1
+	)
+	limit 1);
+	return busca;
+end
+$$;
+select fc_maior_salario()
+drop function fc_maior_salario()
 
---4 crie uma store procedure chamada proc_delprojeto que deleta um projeto da tbl_projetos
--- recebe como parametro o codigo do projeto
-create procedure proc_delprojeto(codigo_do_projeto int)
-language plpgsql
-as $$
+--3 crie a funcao fc_media_salario que retorna a media dos salarios dos empregados
+create function fc_media_salario()
+returns real
+language plpgsql as
+$$
+declare 
+	resultado real;
 begin
-	delete from tbl_projetos
-	where cod_projeto = codigo_do_projeto;
-	commit;
-end $$
--- call proc_delprojeto(3)
--- select * from tbl_projetos
+	resultado = (select avg(salario) from tbl_empregados);
+	return resultado;
+end
+$$;
+select fc_media_salario()
+drop function fc_media_salario()
 
---5 crie uma store procedure chamada proc_projeto_arquivado que recebe o codigo de um projeto.
---a procedure devera criar uma tabela chamada tbl_projetos_arquivados, caso ela nao exista. tabela deve ter 2 colunas: codigo_projeto e nome.
---a procedure deve salvar o projeto do codigo recebido na tbl_projetos_arquivados e deleta-la da tabela tbl_projetos.
-create procedure proc_projeto_arquivado(codigo_do_projeto int)
-language plpgsql
-as $$
+--4 Crie a funcao fc_salarios que recebe o código do empregado como parâmetro e retorne o salário, o salário acrescido de 10% e o salário reduzido em 15%.
+create function fc_salarios(c_empregado int)
+returns table(salario real, salario_acrescimo real, salario_reducao real)
+language plpgsql as
+$$
+declare 
+	resultado real;
 begin
-	create table if not exists tbl_projetos_arquivados(
-		codigo_projeto int,
-		nome text
-		);
-		insert into tbl_projetos_arquivados(codigo_projeto,nome)
-		select cod_projeto, nome from tbl_projetos
-		where cod_projeto=codigo_do_projeto;
-		delete from tbl_projetos
-		where cod_projeto=codigo_do_projeto;
-		commit;
-end $$
-drop PROCEDURE proc_projeto_arquivado
--- call proc_projeto_arquivado(6)
--- select * from proc_projeto_arquivado
+	resultado = (
+		select salario, salario*1.10, salario*0.85 from tbl_empregados
+		where cod_empregado = c_empregado
+				);
+	return resultado;
+end
+$$;
+select fc_salarios()
+drop function fc_salarios()
+
+
+--5 Crie uma funcao denominada fc_projetos que liste o código e o nome de todos os projetos cadastrados.
+CREATE OR REPLACE FUNCTION fc_projetos()
+RETURNS TABLE(codigo INT, nomep TEXT)  -- Alterado para TEXT
+LANGUAGE plpgsql
+AS
+$$
+BEGIN
+    -- Retorna todos os projetos com o código e nome
+    RETURN QUERY
+    SELECT cod_projeto, nome
+    FROM tbl_projetos;
+END;
+$$;
+
+select fc_projetos()
+drop function fc_projetos()
+
+
+--6 Crie a funcao fc_proj_departmento que recebe o codigo do departamento e mostra quantos projetos o departamento possui
+
+
