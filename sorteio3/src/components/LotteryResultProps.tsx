@@ -1,46 +1,50 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { LotteryResultProps } from '../types';
+import { ThemeContext } from '../contexts/ThemeContext'; // Importando o contexto de tema
 import Menu from './Menu';
 
-
-
+// Componente LotteryResult
 const LotteryResult: React.FC<LotteryResultProps> = ({ megasena }) => {
+  const { theme } = useContext(ThemeContext); // Consumindo o contexto de tema
+
   return (
     <Panel>
       <Result>
-      <h1>Mega-Sena</h1>
-      {/* <p><strong>Concurso:</strong> {megasena.numeroDoConcurso}</p> */}
-      {/* <p><strong>Data do Próximo Concurso:</strong> {megasena.dataProximoConcurso}</p> */}
-      {/* <p><strong>Valor do Prêmio:</strong> R$ {megasena.valorPremio.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>  */}
-      <DezenasContainer>
-        {megasena.dezenas.map((dezena, index) => (
-          <Dezena key={index}>
-            {dezena}
-          </Dezena>
-        ))}
-      </DezenasContainer>
-      <p><strong>Data de Apuração:</strong> {megasena.dataApuracao}</p>
+        <h1>Mega-Sena</h1>
+        {/* <p><strong>Concurso:</strong> {megasena.numeroDoConcurso}</p> */}
+        {/* <p><strong>Data do Próximo Concurso:</strong> {megasena.dataProximoConcurso}</p> */}
+        {/* <p><strong>Valor do Prêmio:</strong> R$ {megasena.valorPremio.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p> */}
+        <DezenasContainer>
+          {megasena.dezenas.map((dezena, index) => (
+            <Sld key={index} theme={theme}> {/* Usando o componente Sld aqui */}
+              {dezena}
+            </Sld>
+          ))}
+        </DezenasContainer>
+        <p><strong>Data de Apuração:</strong> {megasena.dataApuracao}</p>
       </Result>
     </Panel>
   );
 };
 
-// Styled-components
-const Result = styled.div`
-border: 2px, solid;
-padding: 20px;
-height: 230px;
-width: 500px;
-`
+// Styled-components com tema
+const Result = styled.div<{ theme: { background: string; color: string } }>`
+  border: 2px solid;
+  padding: 20px;
+  height: 230px;
+  width: 500px;
+  background-color: ${(props) => props.theme?.background || '#f5f5f5'};
+  color: ${(props) => props.theme?.color || '#000'};
+`;
 
-const Panel = styled.div`
+const Panel = styled.div<{ theme: { background: string; color: string } }>`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background-color: #f5f5f5;
+  background-color: ${(props) => props.theme?.background || '#f5f5f5'};
   text-align: center;
   padding: 20px;
 `;
@@ -54,13 +58,14 @@ const DezenasContainer = styled.div`
   padding: 40px;
 `;
 
-const Dezena = styled.span`
-  background-color: #209869;
-  color: #fff;
-  padding: 10px 10px;
-  border-radius: 25px;
-  font-size: 20px;
+// Este é o componente estilizado que utiliza as cores do tema
+const Sld = styled.div<{ theme: { background: string; color: string } }>`
+  font-size: 18px;
   font-weight: bold;
+  padding: 10px;
+  border-radius: 25px;
+  color: ${(props) => props.theme.color};  // Cor do texto
+  background-color: ${(props) => props.theme.background}; // Cor de fundo
 `;
 
 export default LotteryResult;

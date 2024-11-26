@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useContext } from "react";  // Importando useContext
 import { LotteryContext } from "../contexts/LotteryContext"; // Importando o contexto
 import { mega, quina, timemania } from "../themes";  // Importando os temas
+import { ThemeProps } from "../types";
 
 
 const Menu: React.FC = () => {
@@ -10,7 +11,7 @@ const Menu: React.FC = () => {
   const { setTheme } = useContext(LotteryContext);
 
   // Função para definir o tema
-  function handleSetTheme(theme: { backgroud: string; color: string }) {
+  function handleSetTheme(theme: ThemeProps) {
     setTheme(theme); // Atualiza o tema no contexto
   }
 

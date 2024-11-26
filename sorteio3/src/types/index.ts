@@ -9,7 +9,7 @@ export interface LotteryContextProps{
     setTheme:(value:ThemeProps)=>void;
 }
 export interface ThemeProps{
-    backgroud:string;
+    background:string;
     color:string;
 }
 export interface LotteryProps{

@@ -6,10 +6,14 @@ import Timemania from '../pages/Timemania';
 import { LotteryProvider } from '../contexts/LotteryContext'; // Importando o LotteryProvider
 import { ThemeProvider } from '../contexts/ThemeContext'; // Importando o ThemeProvider
 import Menu from '../components/Menu'; // Menu de navegação
+import useLottery from '../hooks/useLottery';
+import { mega } from '../themes';
 
 export default function LotteryRoute() {
+  const { theme } = useLottery(); // Obtendo o tema do hook useLottery
+
   return (
-    <ThemeProvider> {/* ThemeProvider envolve o tema */}
+    <ThemeProvider theme={theme || mega}> {/* Passando o tema para o ThemeProvider */}
       <LotteryProvider> {/* LotteryProvider envolve os dados da loteria */}
         <BrowserRouter>
           <Menu /> {/* Aqui você pode incluir o Menu para navegar entre os temas */}
