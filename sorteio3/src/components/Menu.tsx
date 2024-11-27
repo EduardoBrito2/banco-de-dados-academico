@@ -5,7 +5,6 @@ import { LotteryContext } from "../contexts/LotteryContext"; // Importando o con
 import { mega, quina, timemania } from "../themes";  // Importando os temas
 import { ThemeProps } from "../types";
 
-
 const Menu: React.FC = () => {
   // Consumindo o contexto para pegar a função setTheme
   const { setTheme } = useContext(LotteryContext);

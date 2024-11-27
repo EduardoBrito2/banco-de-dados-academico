@@ -1,3 +1,4 @@
+// ThemeContext.tsx
 import React, { createContext, useState, ReactNode } from 'react';
 import { ThemeProps } from '../types'; // Tipos definidos
 import { mega, quina, timemania } from '../themes'; // Importando os temas
@@ -14,8 +15,9 @@ interface ThemeProviderProps {
   children: ReactNode; // Filhos que serão renderizados
 }
 
+// Inicializando o contexto com um tema padrão
 export const ThemeContext = createContext<ThemeContextType>({
-  theme: mega, // Valor inicial do tema (mega)
+  theme: quina, // Valor inicial do tema (mega)
   setTheme: () => {}, // Função vazia
 });
 
@@ -36,7 +38,7 @@ export function ThemeProvider({ theme, children }: ThemeProviderProps) {
         setCurrentTheme(timemania); // Alterando para o tema da Timemania
         break;
       default:
-        setCurrentTheme(mega); // Fallback para Mega-Sena
+        setCurrentTheme(quina); // Fallback para Mega-Sena
     }
   };
 

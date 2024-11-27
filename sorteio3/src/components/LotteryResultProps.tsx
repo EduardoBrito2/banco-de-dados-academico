@@ -2,11 +2,11 @@ import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { LotteryResultProps } from '../types';
 import { ThemeContext } from '../contexts/ThemeContext'; // Importando o contexto de tema
-import Menu from './Menu';
+import { mega } from '../themes';
 
 // Componente LotteryResult
 const LotteryResult: React.FC<LotteryResultProps> = ({ megasena }) => {
-  const { theme } = useContext(ThemeContext); // Consumindo o contexto de tema
+
 
   return (
     <Panel>
@@ -17,9 +17,9 @@ const LotteryResult: React.FC<LotteryResultProps> = ({ megasena }) => {
         {/* <p><strong>Valor do Prêmio:</strong> R$ {megasena.valorPremio.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p> */}
         <DezenasContainer>
           {megasena.dezenas.map((dezena, index) => (
-            <Sld key={index} theme={theme}> {/* Usando o componente Sld aqui */}
-              {dezena}
-            </Sld>
+             <Sld key={index} theme={mega}>
+             {dezena}
+           </Sld>
           ))}
         </DezenasContainer>
         <p><strong>Data de Apuração:</strong> {megasena.dataApuracao}</p>
@@ -58,14 +58,13 @@ const DezenasContainer = styled.div`
   padding: 40px;
 `;
 
-// Este é o componente estilizado que utiliza as cores do tema
-const Sld = styled.div<{ theme: { background: string; color: string } }>`
+const Sld = styled.div`
   font-size: 18px;
   font-weight: bold;
   padding: 10px;
   border-radius: 25px;
-  color: ${(props) => props.theme.color};  // Cor do texto
-  background-color: ${(props) => props.theme.background}; // Cor de fundo
+  color: ${mega.color};  
+  background-color: ${mega.background}; 
 `;
 
 export default LotteryResult;

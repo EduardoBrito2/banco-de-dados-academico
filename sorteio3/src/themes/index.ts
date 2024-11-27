@@ -12,7 +12,7 @@ export const mega: ThemeProps = {
   };
   
   export const timemania: ThemeProps = {
-    background: "#FFF600",
+    background: "red",
     color: "#049645",
   };
   

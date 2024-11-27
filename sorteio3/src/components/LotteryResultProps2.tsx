@@ -1,21 +1,18 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { QuinaProps } from '../types';  // Tipos específicos da Quina
-
-// Tema da Quina diretamente no Sld
-const quinaTheme = {
-  background: "#260085",  // Cor de fundo da Quina
-  color: "#fff",  // Cor do texto da Quina
-};
+import { quina } from '../themes';  // Importando o tema da Quina
+import { ThemeContext } from '../contexts/ThemeContext';
 
 const LotteryResult2: React.FC<QuinaProps> = ({ quina }) => {
+  const { theme } = useContext(ThemeContext);
   return (
     <Panel>
       <Result>
         <h1>Quina</h1>
         <DezenasContainer>
           {quina.dezenas.map((dezena, index) => (
-            <Sld key={index} theme={quinaTheme}>
+            <Sld key={index} theme={quina}>
               {dezena}
             </Sld>
           ))}
@@ -54,14 +51,14 @@ const DezenasContainer = styled.div`
   padding: 40px;
 `;
 
-// Sld agora aplica o estilo da Quina diretamente
-const Sld = styled.div<{ theme: { background: string; color: string } }>`
+// Sld agora usa o tema importado diretamente no próprio styled-component
+const Sld = styled.div`
   font-size: 18px;
   font-weight: bold;
   padding: 10px;
   border-radius: 25px;
-  color: ${(props) => props.theme.color};  // Cor do texto (branco)
-  background-color: ${(props) => props.theme.background}; // Cor de fundo (roxo)
+  color: ${quina.color};  
+  background-color: ${quina.background}; 
 `;
 
 export default LotteryResult2;

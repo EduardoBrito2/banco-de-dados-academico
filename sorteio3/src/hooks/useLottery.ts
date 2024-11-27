@@ -7,7 +7,7 @@ const useLottery = () => {
   const [megasena, setMegasena] = useState<LotteryProps | null>(null);
   const [quina, setQuina] = useState<LotteryProps | null>(null);
   const [timemania, setTimemania] = useState<LotteryProps | null>(null);
-  const [theme, setTheme] = useState<ThemeProps | null>(mega); // Definindo mega como tema inicial
+  const [theme, setTheme] = useState<ThemeProps | null>(null); // Definindo mega como tema inicial
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -27,7 +27,7 @@ const useLottery = () => {
         // Definindo o tema baseado em algum critério
         // Exemplo: Aqui você pode definir qual tema usar com base na loteria carregada
         // Para fins de demonstração, vou escolher um tema aleatório:
-        setTheme(mega);  // Definindo o tema para Mega-Sena (poderia ser baseado na loteria ou outra lógica)
+        setTheme(null);  // Definindo o tema para Mega-Sena (poderia ser baseado na loteria ou outra lógica)
 
       } catch (err) {
         setError('Erro ao carregar os dados');

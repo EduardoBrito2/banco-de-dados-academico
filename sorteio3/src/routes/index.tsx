@@ -7,13 +7,14 @@ import { LotteryProvider } from '../contexts/LotteryContext'; // Importando o Lo
 import { ThemeProvider } from '../contexts/ThemeContext'; // Importando o ThemeProvider
 import Menu from '../components/Menu'; // Menu de navegação
 import useLottery from '../hooks/useLottery';
-import { mega } from '../themes';
+import { mega, quina, timemania } from '../themes';
+
 
 export default function LotteryRoute() {
   const { theme } = useLottery(); // Obtendo o tema do hook useLottery
 
   return (
-    <ThemeProvider theme={theme || mega}> {/* Passando o tema para o ThemeProvider */}
+    <ThemeProvider theme={theme||mega||quina||timemania}> {/* Passando o tema para o ThemeProvider */}
       <LotteryProvider> {/* LotteryProvider envolve os dados da loteria */}
         <BrowserRouter>
           <Menu /> {/* Aqui você pode incluir o Menu para navegar entre os temas */}

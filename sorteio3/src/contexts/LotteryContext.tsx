@@ -1,13 +1,13 @@
 import React, { useState, createContext } from "react"; // Importando React, useState e createContext
 import { LotteryContextProps, Props, ProviderProps, ThemeProps } from "../types"; // Tipos definidos
-import { mega } from "../themes"; // Importando o tema inicial
+import { mega, quina, timemania } from "../themes"; // Importando o tema inicial
 
 // Criando o contexto da loteria com o tema incluído
 export const LotteryContext = createContext<LotteryContextProps>({
   megasena: undefined, // Inicializando os estados como undefined
   quina: undefined,
   timemania: undefined,
-  theme: mega, // Definindo o tema inicial como 'mega'
+  theme: mega&&quina&&timemania, // Definindo o tema inicial como 'mega'
   setTheme: () => {}, // Função vazia por enquanto
 });
 

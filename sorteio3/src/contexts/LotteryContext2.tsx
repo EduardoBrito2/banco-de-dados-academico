@@ -1,7 +1,7 @@
 import {  useState } from "react";
 import { createContext } from "vm";
-import { LotteryContextProps, Props, ProviderProps, ThemeProps } from "../types";
-import { quina } from "../themes";
+import { LotteryContextProps, Props, ProviderProps } from "../types";
+
 
 
 export const LotteryContext2 = createContext({} as LotteryContextProps);

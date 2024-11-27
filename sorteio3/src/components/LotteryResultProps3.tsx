@@ -1,13 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import { TimemaniaProps } from '../types';
+import { timemania } from '../themes';
 
 // Tema da Timemania diretamente no styled-component
-const timemaniaTheme = {
-  background: "#FFF600",  // Cor amarela para o fundo
-  color: "#049645",  // Cor verde para o texto
-};
-
 const LotteryResult3: React.FC<TimemaniaProps> = ({ timemania }) => {
   return (
     <Panel>
@@ -15,7 +11,7 @@ const LotteryResult3: React.FC<TimemaniaProps> = ({ timemania }) => {
         <h1>Timemania</h1>
         <DezenasContainer>
           {timemania.dezenas.map((dezena, index) => (
-            <Dezena key={index} theme={timemaniaTheme}>
+            <Dezena key={index}>
               {dezena}
             </Dezena>
           ))}
@@ -56,8 +52,8 @@ const DezenasContainer = styled.div`
 
 // Sld agora aplica o estilo da Timemania diretamente
 const Dezena = styled.span<{ theme: { background: string; color: string } }>`
-  background-color: ${(props) => props.theme.background};  // Cor de fundo (amarela)
-  color: ${(props) => props.theme.color};  // Cor do texto (verde)
+  background-color: ${timemania.background};  // Cor de fundo (amarela)
+  color: ${timemania.color};  // Cor do texto (verde)
   padding: 10px 10px;
   border-radius: 25px;
   font-size: 20px;
