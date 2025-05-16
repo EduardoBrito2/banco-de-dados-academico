@@ -2,9 +2,10 @@ import React from 'react';
 import useLottery from '../hooks/useLottery';
 import LotteryResult from '../components/LotteryResultProps';
 import { styled } from 'styled-components';
+import LotteryResult2 from '../components/LotteryResultProps2';
 
 
-const Home: React.FC = () => {
+const Loto: React.FC = () => {
   const { megasena, loading, error } = useLottery();
 
   // Exibe mensagem de carregamento enquanto os dados estão sendo carregados
@@ -27,7 +28,7 @@ const Home: React.FC = () => {
   );
 };
 
-export default Home;
+export default Loto;
 const Loading = styled.div`
   display: flex;
   flex-direction: column;

@@ -1,10 +1,12 @@
 import { ReactNode } from "react";
 
 export interface LotteryContextProps{
-    megasena:Props | undefined
+    megasena:Props | undefined;
+    lotofacil:Props| undefined;
 }
 export interface LotteryProps{
     megasena:Props;
+    lotofacil:Props;
 }
 export interface Props{
     acumulado: boolean;
@@ -22,6 +24,9 @@ export interface Props{
 }
  export interface LotteryResultProps {
     megasena: LotteryProps['megasena'];
+  }
+  export interface LotoProps{
+    lotofacil: LotteryProps['lotofacil']
   }
   export interface ProviderProps{
     children:ReactNode;

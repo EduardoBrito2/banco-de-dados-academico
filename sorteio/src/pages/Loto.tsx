@@ -1,22 +1,18 @@
 import React from 'react';
 import useLottery from '../hooks/useLottery';
+import LotteryResult from '../components/LotteryResultProps';
 import { styled } from 'styled-components';
-import LotteryResult3 from '../components/LotteryResultProps3';
-import Menu from '../components/Menu';
+import LotteryResult2 from '../components/LotteryResultProps2';
 
 
-
-const Timemania: React.FC = () => {
-  const { timemania, loading, error } = useLottery();
+const Home: React.FC = () => {
+  const { lotofacil,loading, error } = useLottery();
 
   // Exibe mensagem de carregamento enquanto os dados estão sendo carregados
   if (loading) {
-    return (
-    <Loading>
-      <Menu></Menu>
+    return <Loading>
       <Text>Carregando...</Text>
-    </Loading>
-      )
+      </Loading>;
   }
 
   // Exibe mensagem de erro caso a requisição falhe
@@ -26,15 +22,13 @@ const Timemania: React.FC = () => {
 
   // Exibe os resultados quando os dados são carregados
   return (
-    <div>
-      {timemania && <LotteryResult3 timemania={timemania.timemania}/>}
-      <Menu></Menu>
-    </div>
-    
+      <div>
+        {lotofacil && <LotteryResult2 lotofacil ={lotofacil?.lotofacil}/>}
+      </div>
   );
 };
 
-export default Timemania;
+export default Home;
 const Loading = styled.div`
   display: flex;
   flex-direction: column;

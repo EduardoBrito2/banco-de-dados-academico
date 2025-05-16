@@ -20,6 +20,7 @@ const LotteryResult: React.FC<LotteryResultProps> = ({ megasena }) => {
         ))}
       </DezenasContainer>
       <p><strong>Data de Apuração:</strong> {megasena.dataApuracao}</p>
+      <strong>Ganhadores:</strong> {megasena.quantidadeGanhadores}
       </Result>
     </Panel>
   );

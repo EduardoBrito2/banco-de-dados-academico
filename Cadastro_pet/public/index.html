@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cadastro de Pets</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Cadastro de Pets</h1>
+
+    <form id="pet-form">
+      <input type="text" id="nome" placeholder="Nome" required />
+      <input type="text" id="especie" placeholder="Espécie" required />
+      <input type="number" id="idade" placeholder="Idade" required />
+      <button type="submit">Cadastrar Pet</button>
+    </form>
+
+    <h2>Lista de Pets</h2>
+    <ul id="pet-list"></ul>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
