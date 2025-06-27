@@ -1,0 +1,12 @@
+body { font-family: Arial, sans-serif; max-width: 700px; margin: 2rem auto; }
+    h1 { text-align: center; }
+    form { margin-bottom: 1.5rem; }
+    label { display: block; margin-top: 0.5rem; }
+    input[type=text], input[type=number], input[type=date] {
+      width: 100%; padding: 0.4rem; margin-top: 0.2rem;
+      box-sizing: border-box;
+    }
+    button { margin-top: 1rem; padding: 0.5rem 1rem; }
+    table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+    th, td { border: 1px solid #ccc; padding: 0.5rem; text-align: left; }
+    .actions button { margin-right: 0.3rem; }

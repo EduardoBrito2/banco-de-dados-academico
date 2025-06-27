@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Gerenciador de Eventos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            color: #333;
+        }
+        .event-card {
+            background-color: white;
+            border: 1px solid #ccc;
+            padding: 16px;
+            margin-bottom: 12px;
+            border-radius: 6px;
+        }
+        input, textarea, button {
+            margin-top: 8px;
+            display: block;
+            width: 100%;
+            padding: 8px;
+            font-size: 14px;
+        }
+        button {
+            background-color: #0066cc;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #004c99;
+        }
+    </style>
+</head>
+<body>
+
+    <h1 id="titulo-principal">Gerenciador de Eventos</h1>
+
+    <!-- Formulário de criação -->
+    <section id="formulario-criacao">
+        <h2>Criar Novo Evento</h2>
+        <label>Nome do evento</label>
+        <input type="text" id="input-nome-evento" placeholder="Nome do Evento">
+        <label>Descrição do evento</label>
+        <textarea id="input-descricao-evento" placeholder="Descrição do Evento"></textarea>
+        <label>Data do evento</label>
+        <input type="date" id="input-data-evento">
+        <label>Valor do evento</label>
+        <input type="text" id="input-valor-evento" placeholder="Valor do Evento (ex: 50.00)">
+        <label>Local do evento</label>
+        <input type="text" id="input-local-evento">
+        <button id="botao-criar-evento">Criar Evento</button>
+    </section>
+
+    <!-- Lista de eventos -->
+    <section id="lista-eventos">
+        <h2>Eventos Criados</h2>
+        <div id="eventos-container"></div>
+    </section>
+
+    <!-- Formulário de edição -->
+    <section id="formulario-edicao" style="display: none;">
+        <h2>Editar Evento</h2>
+        <input type="text" id="editar-nome-evento">
+        <textarea id="editar-descricao-evento"></textarea>
+        <input type="date" id="editar-data-evento">
+        <input type="text" id="editar-valor-evento" placeholder="Valor do Evento">
+        <input type="text" id="editar-local_evento"/>
+        <button id="botao-salvar-edicao">Salvar Alterações</button>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
